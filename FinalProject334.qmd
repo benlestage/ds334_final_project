@@ -12,7 +12,8 @@ library(readr)
 library(plotly)
 SLU_Hockey <- read_csv("DF/334FinalProjData.csv")
 
-SLU_Hockey
+SLU_Hockey |> print(n = 33)
+
 ```
 
 ```{r}

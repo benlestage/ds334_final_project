@@ -18,9 +18,11 @@ SLU_Hockey
 ```{r}
 
 plot1 <- ggplot(data = SLU_Hockey, aes(x = games, y = points, label = player)) +
-  geom_point()
+  geom_point() +
+  theme_minimal() +
+  labs(title = "Points vs Games Played 2023-2024")
 
-plotly(plot1, tooltip = "label")
+ggplotly(plot1, tooltip = "label")
 
 ```
 

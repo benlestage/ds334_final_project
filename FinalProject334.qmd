@@ -10,9 +10,9 @@ format:
 library(tidyverse)
 library(readr)
 library(plotly)
-SLU_Hockey <- read_csv("DF/334FinalProjData.csv")
+SLU_Hockey <- read_csv("DF/FinalProject2.csv")
 
-SLU_Hockey |> print(n = 33)
+SLU_Hockey
 
 ```
 
@@ -25,23 +25,69 @@ plot1 <- ggplot(data = SLU_Hockey, aes(x = games, y = points, label = player)) +
 
 ggplotly(plot1, tooltip = "label")
 
+plot2 <- ggplot(data = SLU_Hockey |> filter(year == "2020-2021") |> filter(position == "D"), 
+       aes(x = Games, y = points, label = player)) +
+  geom_point() + 
+  theme_minimal() +
+  labs(title = "Points vs Games Played for Defensemen 2020-2021")
+
+ggplotly(plot2, tooltip = "label")
+
+SLU_Hockey |> group_by(year) |> select(year, wins, losses, ties, `ECAC Elimination`)
+
+## Ask about how to make table of this ^. Do I need to make a second data frame with just the years?
 ```
 
 
 
 
 ```{r}
+## Shiny App
+
 library(shiny)
 
+x_select <- names(SLU_Hockey)[4:16]
+y_select <- names(SLU_Hockey)[4:16]
+ 
 ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      radioButtons("position_sel", label = "Position:",
+                   choices = SLU_Hockey$position |> unique()),
+      selectInput("x_sel", label = "Select X Variable:",
+                  choices = x_select),
+      selectInput("y_sel", label = "Select Y Variable:",
+                  choices = y_select),
+      radioButtons("year_sel", label = "Select Season",
+                   choices = SLU_Hockey$year |> unique())
+    ),
+    mainPanel(
+      plotOutput("SLU_plot"),
+      tableOutput("season_stats")
+    )
+  )
   
 )
 
 server <- function(input, output, session) {
+  SLU_reactive <- reactive({
+    SLU_oneyear <- SLU_Hockey |> filter(year == input$year_sel)
+    SLU_oneyear
+  })
   
+  output$SLU_plot <- renderPlot({ggplot(data = SLU_reactive |> filter(position == input$position_sel), 
+       aes(x = input$x_sel, y = input$y_sel, label = player)) +
+  geom_point() + 
+  theme_minimal() +
+  labs(title = glue::glue(input$x_sel, " vs ", input$y_var, " for ", input$position_sel, input$year_sel)
+         )
+  })
 }
 
 shinyApp(ui, server)
+
+
+### Running into an error with reactive data set, planning to include more years but want to get my shiny app working first.
 ```
 
 

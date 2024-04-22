@@ -12,8 +12,7 @@ library(readr)
 library(plotly)
 SLU_Hockey <- read_csv("DF/FinalProject2.csv")
 
-SLU_Hockey
-
+SLU_Hockey <- SLU_Hockey |> rename(games = Games)
 ```
 
 ```{r}
@@ -25,17 +24,16 @@ plot1 <- ggplot(data = SLU_Hockey, aes(x = games, y = points, label = player)) +
 
 ggplotly(plot1, tooltip = "label")
 
-plot2 <- ggplot(data = SLU_Hockey |> filter(year == "2020-2021") |> filter(position == "D"), 
+plot2 <- ggplot(data = SLU_Hockey |> filter(year == "2022-2023") |> filter(position == "F"), 
        aes(x = Games, y = points, label = player)) +
   geom_point() + 
   theme_minimal() +
-  labs(title = "Points vs Games Played for Defensemen 2020-2021")
+  labs(title = "Points vs Games Played for Forwards 2022-2023")
 
 ggplotly(plot2, tooltip = "label")
 
-SLU_Hockey |> group_by(year) |> select(year, wins, losses, ties, `ECAC Elimination`)
-
-## Ask about how to make table of this ^. Do I need to make a second data frame with just the years?
+SLU_Hockey |> distinct(year, wins, losses, ties, `ECAC Elimination`) |> arrange(year)
+ ## ^ Use for table output
 ```
 
 
@@ -45,9 +43,13 @@ SLU_Hockey |> group_by(year) |> select(year, wins, losses, ties, `ECAC Eliminati
 ## Shiny App
 
 library(shiny)
+library(glue)
 
 x_select <- names(SLU_Hockey)[4:16]
 y_select <- names(SLU_Hockey)[4:16]
+
+df <- SLU_Hockey |> distinct(year, wins, losses, ties, `ECAC Elimination`) |> arrange(year)
+
  
 ui <- fluidPage(
   sidebarLayout(
@@ -55,14 +57,14 @@ ui <- fluidPage(
       radioButtons("position_sel", label = "Position:",
                    choices = SLU_Hockey$position |> unique()),
       selectInput("x_sel", label = "Select X Variable:",
-                  choices = x_select),
+                  choices = x_select, selected = "Games"),
       selectInput("y_sel", label = "Select Y Variable:",
-                  choices = y_select),
+                  choices = y_select, selected = "points"),
       radioButtons("year_sel", label = "Select Season",
                    choices = SLU_Hockey$year |> unique())
     ),
     mainPanel(
-      plotOutput("SLU_plot"),
+      plotlyOutput("SLU_plot"),
       tableOutput("season_stats")
     )
   )
@@ -71,23 +73,30 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   SLU_reactive <- reactive({
-    SLU_oneyear <- SLU_Hockey |> filter(year == input$year_sel)
+    SLU_oneyear <- SLU_Hockey |> filter(year == input$year_sel) |> filter(position == input$position_sel)
     SLU_oneyear
   })
   
-  output$SLU_plot <- renderPlot({ggplot(data = SLU_reactive |> filter(position == input$position_sel), 
-       aes(x = input$x_sel, y = input$y_sel, label = player)) +
+  
+  plot1 <- reactive({ggplot(SLU_reactive(), 
+       aes(x = .data[[input$x_sel]], y = .data[[input$y_sel]], label = player)) +
   geom_point() + 
-  theme_minimal() +
-  labs(title = glue::glue(input$x_sel, " vs ", input$y_var, " for ", input$position_sel, input$year_sel)
-         )
+  labs(title = glue::glue(input$x_sel, " vs ", input$y_sel, " for ", input$position_sel, " ", input$year_sel)) +
+      theme_minimal()
   })
+  
+  output$SLU_plot <- renderPlotly({plot1()})
+  
+  
+  output$season_stats <- renderTable({df
+    })
 }
+
 
 shinyApp(ui, server)
 
 
-### Running into an error with reactive data set, planning to include more years but want to get my shiny app working first.
+### figure out how to have option for all positions, decide which variables to include as options for x/y variables, decide whether to include just player name as tooltip, organize options so years are in order
 ```
 
 

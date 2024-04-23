@@ -45,11 +45,12 @@ SLU_Hockey |> distinct(year, wins, losses, ties, `ECAC Elimination`) |> arrange(
 library(shiny)
 library(glue)
 
-x_select <- names(SLU_Hockey)[4:16]
+x_select <- names(SLU_Hockey)[4:7]
 y_select <- names(SLU_Hockey)[4:16]
 
 df <- SLU_Hockey |> distinct(year, wins, losses, ties, `ECAC Elimination`) |> arrange(year)
 
+SLU_Hockey <- SLU_Hockey |> arrange(year)
  
 ui <- fluidPage(
   sidebarLayout(
@@ -96,7 +97,7 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 
 
-### figure out how to have option for all positions, decide which variables to include as options for x/y variables, decide whether to include just player name as tooltip, organize options so years are in order
+### Cant figure out how to add option to have both forwards and defensemen on same plot. Want to create an option for this that will cancel out the filter argument for position
 ```
 
 

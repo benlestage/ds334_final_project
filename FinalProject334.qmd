@@ -104,10 +104,10 @@ shinyApp(ui, server)
 
 
 ### Cant figure out how to add option to have both forwards and defensemen on same plot. Want to create an option for this that will cancel out the filter argument for position 
-## Want to make default all players but want option for breaking into F/D
+## Want to make default all players but want option for breaking by position do I need an if/else statement?
+
+### ADD GOALTENDING STATS AND SEPARATE PLOT TO DEMONSTRATE THAT GOALTENDING HAS GIVEN THEM EVERYTHING
 ```
-
-
 
 
 

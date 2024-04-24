@@ -6,11 +6,10 @@ format:
     embed-resources: true
 ---
 
+  In this project I have constructed a shiny app using statistics from the previous four St. Lawrence University Men's Hockey seasons.
+The shiny app allows users to select the season, the position of the players, and the statistics to compare on the x and y axes. When selections are made, the app returns a scatterplot in which the individual players are labeled, and a table of wins/losses/ties and how far the round in which the team was eliminated from the ECAC tournament. The data were collected from the statistics page on the St. Lawrence University Men's Hockey website. The scatterplots showing the individual statistics of the players demonstrate the struggles of St. Lawrence Hockey since 2020 where their best record was 17-19-0. Interestingly, despite having a losing record all four years and individual statistics that are lackluster, St. Lawrence has made the ECAC Tournament all four years and has made it past the first round in three out of four years. This likely speaks to the quality of goaltending that St. Lawrence has possessed in these years.
 
-
-
-
-
+https://saintsathletics.com/sports/2013/7/24/MHOCKEY_0724134208.aspx
 
 
 

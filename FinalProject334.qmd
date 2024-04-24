@@ -1,5 +1,5 @@
 ---
-title: "Coding Quiz 5"
+title: "Final Project"
 author: "Ben LeStage"
 format: 
   html:
@@ -73,21 +73,27 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-  SLU_reactive <- reactive({
+  SLUposition_reactive <- reactive({
     SLU_oneyear <- SLU_Hockey |> filter(year == input$year_sel) |> filter(position == input$position_sel)
     SLU_oneyear
   })
   
-  
-  plot1 <- reactive({ggplot(SLU_reactive(), 
-       aes(x = .data[[input$x_sel]], y = .data[[input$y_sel]], label = player)) +
-  geom_point() + 
-  labs(title = glue::glue(input$x_sel, " vs ", input$y_sel, " for ", input$position_sel, " ", input$year_sel)) +
-      theme_minimal()
+  SLUnoposition_reactive <- reactive({
+    SLU_noposition <- SLU_Hockey |> filter(year == input$year_sel)
+    SLU_noposition
   })
   
-  output$SLU_plot <- renderPlotly({plot1()})
   
+  plot1 <- reactive({ggplot(SLUposition_reactive(), 
+       aes(x = .data[[input$x_sel]], y = .data[[input$y_sel]], label = player, colour = position)) +
+  geom_point() + 
+  labs(title = glue::glue(input$x_sel, " vs ", input$y_sel, " for ", input$position_sel, " ", input$year_sel)) +
+      theme_minimal() +
+      scale_colour_viridis_d()
+  })
+  
+  output$SLU_plot <- renderPlotly({plot1()
+    })
   
   output$season_stats <- renderTable({df
     })
@@ -97,7 +103,8 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 
 
-### Cant figure out how to add option to have both forwards and defensemen on same plot. Want to create an option for this that will cancel out the filter argument for position
+### Cant figure out how to add option to have both forwards and defensemen on same plot. Want to create an option for this that will cancel out the filter argument for position 
+## Want to make default all players but want option for breaking into F/D
 ```
 
 

@@ -12,6 +12,9 @@ library(readr)
 library(plotly)
 SLU_Hockey <- read_csv("DF/FinalProject2.csv")
 
+SLU_Goalies <- read_csv("DF/SLU_Goalies.csv")
+SLU_Goalies
+
 SLU_Hockey <- SLU_Hockey |> rename(games = Games)
 ```
 
@@ -107,6 +110,7 @@ shinyApp(ui, server)
 ## Want to make default all players but want option for breaking by position do I need an if/else statement?
 
 ### ADD GOALTENDING STATS AND SEPARATE PLOT TO DEMONSTRATE THAT GOALTENDING HAS GIVEN THEM EVERYTHING
+## Do goalies need to be on the same dataframe as players just with NA values for 
 ```
 
 

@@ -40,8 +40,6 @@ SLU_Hockey |> distinct(year, wins, losses, ties, `ECAC Elimination`) |> arrange(
 ```
 
 
-
-
 ```{r}
 ## Shiny App
 
@@ -49,7 +47,7 @@ library(shiny)
 library(glue)
 
 x_select <- names(SLU_Hockey)[4:7]
-y_select <- names(SLU_Hockey)[4:16]
+y_select <- names(SLU_Hockey)[5:20]
 
 df <- SLU_Hockey |> distinct(year, wins, losses, ties, `ECAC Elimination`) |> arrange(year)
 
@@ -60,8 +58,6 @@ ui <- fluidPage(
     sidebarPanel(
       radioButtons("position_sel", label = "Position:",
                    choices = SLU_Hockey$position |> unique()),
-      selectInput("x_sel", label = "Select X Variable:",
-                  choices = x_select, selected = "Games"),
       selectInput("y_sel", label = "Select Y Variable:",
                   choices = y_select, selected = "points"),
       radioButtons("year_sel", label = "Select Season",
@@ -88,7 +84,7 @@ server <- function(input, output, session) {
   
   
   plot1 <- reactive({ggplot(SLUposition_reactive(), 
-       aes(x = .data[[input$x_sel]], y = .data[[input$y_sel]], label = player, colour = position)) +
+       aes(x = games, y = .data[[input$y_sel]], label = player, colour = position)) +
   geom_point() + 
   labs(title = glue::glue(input$x_sel, " vs ", input$y_sel, " for ", input$position_sel, " ", input$year_sel)) +
       theme_minimal() +
@@ -106,11 +102,10 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 
 
-### Cant figure out how to add option to have both forwards and defensemen on same plot. Want to create an option for this that will cancel out the filter argument for position 
-## Want to make default all players but want option for breaking by position do I need an if/else statement?
-
 ### ADD GOALTENDING STATS AND SEPARATE PLOT TO DEMONSTRATE THAT GOALTENDING HAS GIVEN THEM EVERYTHING
-## Do goalies need to be on the same dataframe as players just with NA values for 
+## Do goalies need to be on the same dataframe as players just with NA values for other variables?
+
+## How to make other tab for goalies?
 ```
 
 

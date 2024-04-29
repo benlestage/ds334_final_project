@@ -6,6 +6,8 @@ format:
     embed-resources: true
 ---
 
+# Abstract
+
   In this project I have constructed a shiny app using statistics from the previous four St. Lawrence University Men's Hockey seasons.
 The shiny app allows users to select the season, the position of the players, and the statistics to compare on the x and y axes. When selections are made, the app returns a scatterplot in which the individual players are labeled, and a table of wins/losses/ties and how far the round in which the team was eliminated from the ECAC tournament. The data were collected from the statistics page on the St. Lawrence University Men's Hockey website. The scatterplots showing the individual statistics of the players demonstrate the struggles of St. Lawrence Hockey since 2020 where their best record was 17-19-0. Interestingly, despite having a losing record all four years and individual statistics that are lackluster, St. Lawrence has made the ECAC Tournament all four years and has made it past the first round in three out of four years. This likely speaks to the quality of goaltending that St. Lawrence has possessed in these years. This stellar goaltending is also demonstrated in the plots, when the user selects G under position.
 
@@ -13,9 +15,48 @@ https://saintsathletics.com/sports/2013/7/24/MHOCKEY_0724134208.aspx
 
 
 
+# Introduction
 
-
-
+  Despite having a losing record for the past 4 years, the St. Lawrence University Men's Ice Hockey Team has made the ECAC Tournament all four years and has made it past the first round in three of the four seasons. This success in the tournament comes despite lackluster individual statistics from the team as a whole. 
+  
+How is this success possible despite losing records and unspectacular individual statistics?
+  
+  This is the question of interest that has guided this project and that I will attempt to answer using visualizations of individual statistics. The data comes from the St. Lawrence University Men's Hockey statistics website. While the data is scrapeable, there are double headings that made it difficult to tidy and work with the data set. Because of this, I transferred the data from the website into my own spreadsheet, choosing the variables that I would be interested in. 
+  
+  The variables I selected are as follows:
+  
+Universal Variables
+  Number - number worn by the player
+  Player - name of player
+  Position - position of player (F, D, G)
+  
+Variables for Forwards and Defensemen
+  Games - number of games played in that particular season
+  Goals - number of goals scored in that particular season
+  Assists - number of assists that season
+  Points - sum of goals and assists that season
+  Shots - number of shots on goal that season
+  Shooting% - percentage of shots that scored that season
+  PlusMinus - spread of how many goals for the player was on the ice for versus goals against (positive value means player was on the ice for more goals for than against)
+  PPGoals - number of power play goals that season
+  GameWinners - number of game-winning-goals that season
+  otGoals - number of Overtime Goals that season
+  Penalties - number of penalties that season
+  PIM - number of penalty minutes that season
+  Blocks - number of blocked shots that season
+  
+Variables for Goaltenders
+  Goals Against - number of goals scored against that season (goalies only)
+  Goals Against Average - average goals against per game (goalies only)
+  Saves - total number of saves that season
+  Save% - percentage of shots saved that season
+  
+Team Variables
+  Year - Season (start/end yer for example: 2021-2022 is the season that started in  Fall 2021 and ended in Spring 2022)
+  Wins - number of team wins that season
+  Losses - number of team losses that season
+  Ties - number of team ties that season
+  ECAC Elimination - which round of the ECAC tournament was St. Lawrence eliminated in (if Tournament was won, coded as "won")
 
 
 

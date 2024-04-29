@@ -1,0 +1,61 @@
+---
+title: "Untitled"
+format: revealjs
+---
+
+```{r}
+#| echo : false
+#| output: false
+#| warning: false
+
+library(tidyverse)
+library(readr)
+library(plotly)
+SLU_Hockey <- read_csv("DF/FinalProject2.csv")
+
+SLU_Goalies <- read_csv("DF/SLU_Goalies.csv")
+
+SLU_Hockey <- SLU_Hockey |> rename(games = Games)
+```
+
+
+
+## Data
+
+* Individual Season Stats St. Lawrence Men's Hockey 2020-2024
+
+* Points / Saves / Plus/Minus per Game
+
+*
+
+
+## Visualization 
+```{r}
+plot2 <- ggplot(data = SLU_Hockey |> filter(year == "2023-2024") |> filter(position == "F"), 
+       aes(x = games, y = plusminus, label = player)) +
+  geom_point() + 
+  theme_minimal() +
+  labs(title = "Points vs Games Played for Forwards 2023-2024")
+
+ggplotly(plot2, tooltip = "label")
+
+SLU_Hockey |> distinct(year, wins, losses, ties, `ECAC Elimination`) |> arrange(year) |> filter(year == "2023-2024")
+
+```
+
+
+## Visualization
+```{r}
+plot3 <- ggplot(data = SLU_Goalies |> filter(year == "2023-2024"),
+                aes(x = games, y = `save%`, label = player)) +
+  geom_point() +
+  theme_minimal() +
+  labs(title = "Save Percentage vs Games Played 2023-2024")
+
+ggplotly(plot3, tooltip = "label")
+
+SLU_Hockey |> distinct(year, wins, losses, ties, `ECAC Elimination`) |> filter(year == "2023-2024")
+
+```
+
+

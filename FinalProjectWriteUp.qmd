@@ -58,7 +58,7 @@ Team Variables
   Ties - number of team ties that season
   ECAC Elimination - which round of the ECAC tournament was St. Lawrence eliminated in (if Tournament was won, coded as "won")
 
-
+Along with my primary question of interest, I will also explore other relationships in the data that also might be able to explain the teams' record. This might include examining the relationship between position and points scored as well as the number of powerplay goals per game. These statistics and relationships might also give some explanation as to why the team found success despite having a losing record. Defensive statistics such as blocks, and looking at the individual plus/minus of players per game could ease some pressure on the goaltenders. While it is clear that the St. Lawrence team typically does not score many goals, their statistics in other realms includings like number of penalites and their success on the penalty kill might also help to explain their success in the ECAC tournament despite their lack of regular season success.
 
 
 

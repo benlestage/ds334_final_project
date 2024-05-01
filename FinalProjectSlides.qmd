@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "St. Lawrence Men's Hockey Statistics"
 format: revealjs
 ---
 
@@ -19,14 +19,17 @@ SLU_Hockey <- SLU_Hockey |> rename(games = Games)
 ```
 
 
-
 ## Data
 
 * Individual Season Stats St. Lawrence Men's Hockey 2020-2024
 
 * Points / Saves / Plus/Minus per Game
 
-*
+* Team record 
+```{r}
+SLU_Hockey |> distinct(year, wins, losses, ties, `ECAC Elimination`) |> arrange(year)
+```
+
 
 
 ## Visualization 
@@ -35,12 +38,25 @@ plot2 <- ggplot(data = SLU_Hockey |> filter(year == "2023-2024") |> filter(posit
        aes(x = games, y = plusminus, label = player)) +
   geom_point() + 
   theme_minimal() +
-  labs(title = "Points vs Games Played for Forwards 2023-2024")
+  labs(title = "Plus/Minus vs Games Played for Forwards 2023-2024")
 
 ggplotly(plot2, tooltip = "label")
 
 SLU_Hockey |> distinct(year, wins, losses, ties, `ECAC Elimination`) |> arrange(year) |> filter(year == "2023-2024")
 
+```
+
+## Visualization
+```{r}
+plot4 <- ggplot(data = SLU_Hockey |> filter(year == "2023-2024") |> filter(position == "F"), 
+       aes(x = games, y = points, label = player)) +
+  geom_point() + 
+  theme_minimal() +
+  labs(title = "Points vs Games Played for Forwards 2023-2024")
+
+ggplotly(plot4, tooltip = "label")
+
+SLU_Hockey |> distinct(year, wins, losses, ties, `ECAC Elimination`) |> arrange(year) |> filter(year == "2023-2024")
 ```
 
 
